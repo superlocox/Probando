@@ -1,15 +1,24 @@
 import React, { Fragment, useState } from "react";
 
 const EditTodo = ({ todo }) => {
+
+  const[nombre, setNombre] = useState(todo.nombre);
+  const[precio, setPrecio] = useState(todo.precio);
+  const[cantidad, setCantidad] = useState(todo.cantidad);
   //editText function
 
   const editText = async (id) => {
     try {
-      const body = { description };
+      // const body = { description };
+      const body = {nombre, precio, cantidad};
+       
+   
+
+
 
       //proxy
 
-      const res = await fetch(`/todos/${id}`, {
+      const res = await fetch(`/productos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -21,68 +30,52 @@ const EditTodo = ({ todo }) => {
     }
   };
 
-  const [description, setDescription] = useState(todo.description);
   return (
     <Fragment>
-      <button
-        type="button"
-        class="btn btn-warning"
-        data-toggle="modal"
-        data-target={`#id${todo.todo_id}`}
-      >
-        Edit
-      </button>
-      {/* id = "id21"*/}
-      <div
-        class="modal"
-        id={`id${todo.todo_id}`}
-        onClick={() => setDescription(todo.description)}
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Todo</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                onClick={() => setDescription(todo.description)}
-              >
-                &times;
-              </button>
-            </div>
+    <button type="button" className="btn btn-warning" onClick={()=>setear()} data-bs-toggle="modal" data-bs-target={`#id${todo.id}`} >
+    Editar
+    </button>
 
-            <div class="modal-body">
-              <input
-                type="text"
-                className="form-control"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-warning"
-                data-dismiss="modal"
-                onClick={() => editText(todo.todo_id)}
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-dismiss="modal"
-                onClick={() => setDescription(todo.description)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
+    <div className="modal fade" id={`id${todo.id}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div className="modal-dialog">
+        <div className="modal-content">
+        <div className="modal-header">
+            <h5 className="modal-title" id="staticBackdropLabel">Editar</h5>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      </div>
-    </Fragment>
+        <div className="modal-body">
+
+        <div className="input-group mb-3">
+            <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">Nombre</span>
+            </div>
+            <input type="text" className="form-control" placeholder="Nombre" aria-label="Default"  value={nombre} onChange={e=> setNombre(e.target.value)} aria-describedby="basic-addon1"/>
+        </div>
+
+        <div className="input-group mb-3">
+            <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">Precio</span>
+            </div>
+            <input type="text" className="form-control" placeholder="Precio" aria-label="Default" value={precio} onChange={e=> setPrecio(e.target.value)}  aria-describedby="basic-addon1"/>
+        </div>
+
+        <div className="input-group mb-3">
+            <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">Cantidad</span>
+            </div>
+            <input type="text" className="form-control" placeholder="Cantidad" aria-label="Default" value={cantidad} onChange={e=> setCantidad(e.target.value)}  aria-describedby="basic-addon1"/>
+        </div>
+
+
+        </div>
+        <div className="modal-footer">
+            <button type="button" className="btn btn-warning" data-bs-dismiss="modal" onClick={e=> updateProducto()}>Editar</button>
+            <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>setear() }>Cerrar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</Fragment>
   );
 };
 

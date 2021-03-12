@@ -100,6 +100,81 @@ app.delete("/todos/:id", async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+app.post("/productos",async(req,res)=>{
+
+  try {
+      const {nombre,precio,cantidad} = req.body; 
+      const text = 'INSERT INTO productos(nombre,precio,cantidad) VALUES ($1,$2,$3)';
+      console.log(nombre);
+      console.log(precio);
+      console.log(cantidad);
+      const nuevo = await pool.query(text,[nombre,precio,cantidad]);
+
+      res.json(nuevo.rows[0]);
+  } catch (e) {
+      console.log(e);
+  }
+});
+
+app.get("/productos",async (req,res)=>{
+  try {
+      
+      const buscar = await pool.query('select * from productos order by id');
+      res.json(buscar.rows);
+  } catch (e) {
+      console.log(e);
+      
+  }
+});
+
+app.get("/productos/:id",async (req,res)=>{
+  try {
+      const { id } = req.params;
+      const buscar_uno = await pool.query('select * from productos where id=$1',[id]);
+      res.json(buscar_uno.rows);
+  } catch (e) {
+      console.log(e);
+      
+  }
+});
+
+app.put("/productos/:id",async (req,res)=>{
+  try {
+      const {id} = req.params;
+      const {nombre,precio,cantidad} = req.body; 
+      const text = 'UPDATE productos SET nombre = $1, precio = $2, cantidad = $3 WHERE id = $4 ';
+      const actualizar = await pool.query(text,[nombre,precio,cantidad,id]);
+
+      res.json('Actualizado');
+      //console.log(actualizar);
+  } catch (e) {
+      console.log(e);
+      
+  }
+});
+
+app.delete("/productos/:id",async (req,res)=>{
+  try {
+      const {id} = req.params;
+      const text = 'DELETE from productos WHERE id = $1';
+      const actualizar = await pool.query(text,[id]);
+
+      res.json('Se borro');
+  } catch (e) {
+      console.log(e);
+      
+  }
+});
+
+
+
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build/index.html"));
 });

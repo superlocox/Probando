@@ -8,6 +8,7 @@ const ListTodos = () => {
 
   async function deleteTodo(id) {
     try {
+      // eslint-disable-next-line
       const res = await fetch(`/productos/${id}`, {
         method: "DELETE",
       });
@@ -19,6 +20,7 @@ const ListTodos = () => {
   }
 
   async function getTodos() {
+    // eslint-disable-next-line
     const res = await fetch("/productos");
 
     const todoArray = await res.json();

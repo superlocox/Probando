@@ -7,17 +7,13 @@ const EditTodo = ({ todo }) => {
   const[cantidad, setCantidad] = useState(todo.cantidad);
   //editText function
 
-  const editText = async (id) => {
+  const updateProducto = async (id) => {
     try {
       // const body = { description };
       const body = {nombre, precio, cantidad};
-       
-   
-
-
 
       //proxy
-
+      // eslint-disable-next-line
       const res = await fetch(`/productos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -29,6 +25,12 @@ const EditTodo = ({ todo }) => {
       console.error(err.message);
     }
   };
+
+  const setear = ()=>{
+    setNombre(todo.nombre);
+    setPrecio(todo.precio);
+    setCantidad(todo.cantidad);
+}
 
   return (
     <Fragment>

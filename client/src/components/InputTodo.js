@@ -18,6 +18,7 @@ const InputTodo = () => {
       //remember this heroku app is just our server serving the build static content and also holding the restful api
 
       //https://pern-todo-app-demo.herokuapp.com/todos
+      // eslint-disable-next-line
       const response = await fetch("/productos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

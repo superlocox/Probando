@@ -32,7 +32,7 @@ const ListTodos = () => {
     getTodos();
   }, []);
 
-  console.log(todos);
+  // console.log(todos);
 
   return (
     <Fragment>

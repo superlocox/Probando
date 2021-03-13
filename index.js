@@ -175,16 +175,16 @@ app.delete("/productos/:id",async (req,res)=>{
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client/build/index.html"));
+// });
 
-// if(process.env.NODE_ENV === 'production'){
-//   const path  =  require('path');
-//   app.get('/*',(req,res)=>{
-//       res.sendfile(path.resolve(__dirname,'client','build','index.html'))
-//   })
-// }
+if(process.env.NODE_ENV === 'production'){
+  const path  =  require('path');
+  app.get('/*',(req,res)=>{
+      res.sendfile(path.resolve(__dirname,'client','build','index.html'))
+  })
+}
 
 app.listen(PORT, () => {
   console.log(`Server is starting on port ${PORT}`);

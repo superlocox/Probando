@@ -14,6 +14,8 @@ const EditTodo = ({ todo }) => {
 
       //proxy
       // eslint-disable-next-line
+      console.log(body);
+      // eslint-disable-next-line
       const res = await fetch(`/productos/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -71,7 +73,7 @@ const EditTodo = ({ todo }) => {
 
         </div>
         <div className="modal-footer">
-            <button type="button" className="btn btn-warning" data-bs-dismiss="modal" onClick={e=> updateProducto()}>Editar</button>
+            <button type="button" className="btn btn-warning" data-bs-dismiss="modal" onClick={e=> updateProducto(`${todo.id}`)}>Editar</button>
             <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>setear() }>Cerrar</button>
         </div>
         </div>

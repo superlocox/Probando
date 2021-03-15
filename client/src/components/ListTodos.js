@@ -14,6 +14,7 @@ const ListTodos = () => {
       });
 
       setTodos(todos.filter((todo) => todo.todo_id !== id));
+      window.location = "/";
     } catch (err) {
       console.error(err.message);
     }

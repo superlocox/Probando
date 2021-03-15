@@ -12,6 +12,7 @@ const EditTodo = ({ todo }) => {
       // const body = { description };
       const body = {nombre, precio, cantidad};
 
+      
       //proxy
       // eslint-disable-next-line
       console.log(body);

@@ -9,8 +9,11 @@ const PORT = process.env.PORT || 5000;
 //process.env.NODE_ENV => production or undefined
 
 //middleware
+
 app.use(cors());
 app.use(express.json()); // => allows us to access the req.body
+app.use("/authentication", require("./routes/jwtAuth"));
+app.use("/dashboard", require("./routes/dashboard"));
 
 // app.use(express.static(path.join(__dirname, "client/build")));
 // app.use(express.static("./client/build")); => for demonstration
@@ -21,86 +24,26 @@ app.use(express.json()); // => allows us to access the req.body
 //   app.use(express.static(path.join(__dirname, "client/build")));
 // }
 
-console.log(__dirname);
-console.log(path.join(__dirname, "client/build"));
+// console.log(__dirname);
+// console.log(path.join(__dirname, "client/build"));
 
 //ROUTES//
 
-//get all Todos
+app.post("/register",async(req,res)=>{
 
-app.get("/todos", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM todo");
+      const {username,pw} = req.body; 
+      const text = 'INSERT INTO productos(username,password) VALUES ($1,$2)';
+      console.log(username);
+      console.log(pw);
+      console.log(cantidad);
+      const nuevo = await pool.query(text,[username,pw]);
 
-    res.json(allTodos.rows);
-  } catch (err) {
-    console.error(err.message);
+      res.json(nuevo.rows[0]);
+  } catch (e) {
+      console.log(e);
   }
 });
-
-//get a todo
-
-app.get("/todos/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1", [
-      id,
-    ]);
-    res.json(todo.rows[0]);
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-//create a todo
-
-app.post("/todos", async (req, res) => {
-  try {
-    console.log(req.body);
-    const { description } = req.body;
-    const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES ($1) RETURNING *",
-      [description]
-    );
-
-    res.json(newTodo.rows[0]);
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-//update a todo
-
-app.put("/todos/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { description } = req.body;
-    const updateTodo = await pool.query(
-      "UPDATE todo SET description = $1 WHERE todo_id = $2",
-      [description, id]
-    );
-
-    res.json("Todo was updated");
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-//delete a todo
-
-app.delete("/todos/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const deleteTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [
-      id,
-    ]);
-    res.json("Todo was deleted");
-  } catch (err) {
-    console.error(err.message);
-  }
-});
-
-
 
 
 
@@ -173,6 +116,11 @@ app.delete("/productos/:id",async (req,res)=>{
 });
 
 
+
+///////////////////////////
+
+app.use(require('./routes/users'));
+
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // app.get("*", (req, res) => {
@@ -189,3 +137,5 @@ if(process.env.NODE_ENV === 'production'){
 app.listen(PORT, () => {
   console.log(`Server is starting on port ${PORT}`);
 });
+
+

@@ -35,15 +35,15 @@ const InputTodo = () => {
     <h1 className="text-center mt-5">PERN STACK</h1>
     <form onSubmit={onSubmitForm}>
        <div className="form-group">
-       <label >Nombre</label>
+       <h4 >Nombre</h4>
         <input type="text" className="form-control" value={nombre} onChange={e=> setNombre(e.target.value)}/>
        </div>
        <div className="form-group">
-       <label >Precio</label>
+       <h4 >Precio</h4>
         <input type="numeric" min='1'  className="form-control" value={precio} onChange={e=> setPrecio(e.target.value)}/>
        </div>
        <div className="form-group">
-       <label >Cantidad</label>
+       <h4>Cantidad</h4>
         <input type="numeric" min='1' className="form-control" value={cantidad} onChange={e=> setCantidad(e.target.value)}/>
        </div>
        <button className="btn btn-success mt-3">Agregar</button>
